@@ -34,8 +34,101 @@
 	</footer>
 
 	<script>
-		$('.ui.dropdown')
-		.dropdown()
+
+		//ARRAY
+		const dates = ["12 Fevrier", "26 Fevrier", "12 Mars", "9 Avril", "23 Avril","7 Mai", "4 juin", "18 juin"]
+
+		let items = []
+
+		//Populate dropdown values 
+		dates.forEach(date=>{
+			items.push({
+				name: date,
+                value: date
+			})
+		})
+
+		//SEMANTIC DROPDOWN INIT
+		$('#dropdown')
+        .dropdown({
+            values: items,
+			placeholder: "Choisissez une date"
+        })
+        ;
+		$('#modal_dropdown')
+        .dropdown({
+            values: items,
+			placeholder: "Modifiez la date"
+        })
+        ;
+
+		//Bootstrap modal init
+		const exampleModal = document.getElementById('exampleModal')
+		exampleModal.addEventListener('show.bs.modal', event => 
+		{
+			// Button that triggered the modal
+			const button = event.relatedTarget
+			// Extract info from data-bs-* attributes
+			const nom = button.getAttribute('data-bs-name')
+			const theme = button.getAttribute('data-bs-theme')
+			const tableDate = button.getAttribute('data-bs-date')
+			// If necessary, you could initiate an AJAX request here
+			// and then do the updating in a callback.
+			//
+			// Update the modal's content.
+			const modalName = exampleModal.querySelector('.modal-name')
+			const modalTheme = exampleModal.querySelector('.modal-theme')
+
+			//Load values
+			modalName.value = nom
+			modalTheme.value = theme
+
+		})
+
+
+		
+
+		//FORM VALIDATION
+		$('.ui.form')
+		.form({
+			fields: {
+			nom: {
+				identifier: 'nom',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Entrez votre nom s\'il vous plait'
+				},
+				{
+					type   : 'maxLength[20]',
+					prompt : 'Trop long comme nom!'
+				}
+				]
+			},
+			theme: {
+				identifier: 'theme',
+				rules: [
+				{
+					type   : 'maxLength[80]',
+					prompt : 'Votre theme est beaucoup trop long!'
+				}
+				]
+			},
+			date: {
+				identifier: 'date',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Vous devez choisir une date'
+				},
+				{
+					type   : 'maxLength[15]',
+					prompt : 'Trop long comme date!'
+				}
+				]
+			},
+			}
+		})
 		;
 	</script>
 	

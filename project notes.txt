@@ -7,14 +7,27 @@ Table
 
 
 JS
-- Validate adding & edit forms  [If name already exist error handler | Restrict data length]
+- Validate adding & edit forms  [Restrict data length] [Done]
+-Add active, selected to modal-item on click "Edit" [DONE]
+-Add dropdown item dynimically [DONE]
+-Cut off all table data length, in case [DONE]
+-Pagination [DONE]
+
+-Onload send array data to view and use it for Validation In case Name already exists or 
+date already picked | Remove date from ddown_array if already picked
+
+-Mettre a jour >> Patch req refreshing the page [If name already exist error handler ]
+
  
 DB
 - name
-- topic (not required) [default value]
+- theme (not required) [default value]
 - date 
 
-- Fr(1) | Sr(0) [Later]
+SERVER REQ
+
+
+GIT & DEPLOY 
 
 
 
