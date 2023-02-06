@@ -1,1 +1,185 @@
-My home page
+<div class="container-fluid">
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-3">
+            <h1 class="display-5 fw-bold">Programme de partages</h1>
+            <p class="col-md-8 fs-4">Faites-nous deja part du theme que vous aimerez aborder. Au cas contraire, laissez le champ vide.</p>
+            {{!-- <div class="d-flex">
+                <form action="POST" id="orateur">
+                    <input type="text" id="name" placeholder="Nom"/>
+                    <input type="text" id="theme" placeholder="Theme (facultatif)"/>
+                    <select name="date" id="date">
+                        <option value="Choisissez une data">Choisissez une date</option>
+                        <option value="12 Fevrier">12 Fevrier</option>
+                        <option value="26 Fevrier">26 Fevrier</option>
+                    </select>
+                    <button class="btn btn-primary btn-lg" type="submit">Ajouter</button>
+                </form>
+            </div> --}}
+        
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-5 col-md col-sm-12 mb-5">
+            <form class="ui form" id="ajouter">
+                <div class="field">
+                    <input type="text" name="first-name" placeholder="Votre nom">
+                </div>
+                <div class="field">
+                    <input type="text" name="last-name" placeholder="Votre theme (facultatif)">
+                </div>
+                <div class="field">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="gender">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Choisissez une date</div>
+                        <div class="menu">
+                            <div class="item" data-value="12 Février">12 Fevrier</div>
+                            <div class="item" data-value="26 Février">26 Fevrier</div>
+                            <div class="item" data-value="12 Mars">12 Mars</div>
+                            <div class="item" data-value="9 Avril">9 Avril</div>
+                            <div class="item" data-value="23 Avril">23 Avril</div>
+                            <div class="item" data-value="7 Mai">7 Mai</div>
+                            <div class="item" data-value="4 juin">4 juin</div>
+                            <div class="item" data-value="18 juin">18 juin</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="ui button" type="submit">Ajouter</button>
+            </form>
+        </div>
+        <div class="col-lg-7 col-md col-sm mb-5">
+            {{!-- <table class="ui celled table">
+                <thead>
+                    <tr><th>Orateur</th>
+                    <th>Theme</th>
+                    <th>Date</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                    <td data-label="Name">James</td>
+                    <td data-label="Age">24</td>
+                    <td data-label="Job">Engineer</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr><th colspan="5">
+                        <div class="ui right floated pagination menu">
+                            <a class="icon item">
+                            <i class="left chevron icon"></i>
+                            </a>
+                            <a class="item">1</a>
+                            <a class="item">2</a>
+                            <a class="item">3</a>
+                            <a class="item">4</a>
+                            <a class="icon item">
+                            <i class="right chevron icon"></i>
+                            </a>
+                        </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table> --}}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Orateur</th>
+                        <th>Theme</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jean Marie</td>
+                        <td>Aucun theme</td>
+                        <td>26 Fevrier</td>
+                        <td><button class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-name="Jean Marie" data-bs-theme="" data-bs-date="26 Fevrier">Editer</button></td>
+                    </tr>
+                    <tr>
+                        <td>Jean Marie</td>
+                        <td>Aucun theme</td>
+                        <td>26 Fevrier</td>
+                        <td>
+                            <button class="btn btn-secondary edit">Editer</button>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td>Jean Marie</td>
+                        <td>Le chemin qui conduit à la repentance selon Jean 4 : 5</td>
+                        <td>26 Fevrier</td>
+                        <td>
+                            <button class="btn btn-secondary edit">Editer</button>
+                        </td>
+                    </tr>
+                    <tfoot>
+                    <tr><th colspan="5">
+                        <div class="ui right floated pagination menu">
+                            <a class="icon item">
+                            <i class="left chevron icon"></i>
+                            </a>
+                            <a class="item">1</a>
+                            <a class="item">2</a>
+                            <a class="item">3</a>
+                            <a class="item">4</a>
+                            <a class="icon item">
+                            <i class="right chevron icon"></i>
+                            </a>
+                        </div>
+                        </th>
+                    </tr>
+                </tfoot>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{!-- Modal --}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editer vos informations</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <form class="ui form" id="ajouter">
+                        <div class="field">
+                            <input type="text" name="first-name" placeholder="Votre nom">
+                        </div>
+                        <div class="field">
+                            <input type="text" name="last-name" placeholder="Votre theme (facultatif)">
+                        </div>
+                        <div class="field">
+                            <div class="ui selection dropdown">
+                                <input type="hidden" name="gender">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">Choisissez une date</div>
+                                <div class="menu">
+                                    <div class="item" data-value="12 Février">12 Fevrier</div>
+                                    <div class="item" data-value="26 Février">26 Fevrier</div>
+                                    <div class="item" data-value="12 Mars">12 Mars</div>
+                                    <div class="item" data-value="9 Avril">9 Avril</div>
+                                    <div class="item" data-value="23 Avril">23 Avril</div>
+                                    <div class="item" data-value="7 Mai">7 Mai</div>
+                                    <div class="item" data-value="4 juin">4 juin</div>
+                                    <div class="item" data-value="18 juin">18 juin</div>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- <button class="ui button" type="submit">Mettre à jour</button> --}}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Mettre à jour</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- End of modal --}}
+
+
+</div>
+
