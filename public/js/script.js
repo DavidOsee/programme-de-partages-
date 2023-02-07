@@ -3,125 +3,9 @@ $(document).ready(function(){
 
     //-- TABLE
 
-    //Table data
-    const data = 
-    [
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 1
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 2
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 3
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 4
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 5
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : 6
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 7
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 8
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : 9
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 10
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : 11
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 12
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 13
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : 14
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 15
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 16
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : 17
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: 18
-    
-        }
-    ]
+    //Get data
+    let data = []
+    data  = JSON.parse($('input#data').val())
 
     //Data content
     const dataContent = (id, name, theme, date)=>{
@@ -159,15 +43,6 @@ $(document).ready(function(){
         for(i=rightRef-1; i<5; i++)
             dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
     }
-
-    //Populate table with ref > 5
-    // if(rightRef > 1)
-    // {
-        
-    // }
-    
-        
-   
 
     //Left navigation
     $('#left_nav').on('click', ()=>
@@ -210,6 +85,79 @@ $(document).ready(function(){
         for(i=init; i<rightRef*5; i++)
             dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
      
+    })
+
+    //SUBMIT AJOUTER FORM
+    $('form#ajouter').on('submit', (e)=>{
+        //
+        e.preventDefault()
+        
+        const $inputs = $('#ajouter :input');
+
+        //Get input values
+        let form_data = {}
+
+        $inputs.each(function() {
+            form_data[this.name] = $(this).val();
+        });
+
+        //Validate before sending to the server 
+        if(form_data.nom ==""  || form_data.date=="")
+            return false
+        
+        if(form_data.nom.length > 20 || form_data.theme.length > 80 || form_data.date.length > 15)
+            return false
+
+        //Ajax 
+        $.ajax({
+            url: '/add',
+            type: "POST",
+            data: form_data,
+            success: function (data) {
+              console.log(data)
+            },
+            error: function (xhr, exception) {
+                console.log(exception)
+            }
+          })
+      
+    })
+
+
+    //SUBMIT EDITER FORM 
+    $('form#editer').on('submit', (e)=>{
+        //
+        e.preventDefault()
+
+        const $inputs = $('#editer :input');
+
+        //Get input values
+        let modal_data = {};
+
+        $inputs.each(function() {
+            modal_data[this.name] = $(this).val();
+        });
+
+        //Validate before sending to the server 
+        if(modal_data.nom =="" || modal_data.date=="")
+            return false
+        
+        if(modal_data.nom.length > 20 || modal_data.theme.length > 80 || modal_data.date.length > 15)
+            return false
+
+        //Ajax 
+        $.ajax({
+            url: '/edit',
+            type: "PATCH",
+            data: modal_data,
+            success: function (data) {
+              console.log(data)
+            },
+            error: function (xhr, exception) {
+                console.log(exception)
+            }
+          })
+      
     })
 
 

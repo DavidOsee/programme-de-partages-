@@ -13,8 +13,12 @@ JS
 -Cut off all table data length, in case [DONE]
 -Pagination [DONE]
 
+BACK & FRONT
+Remove date from ddown_array if already picked [DONE]
+
 -Onload send array data to view and use it for Validation In case Name already exists or 
-date already picked | Remove date from ddown_array if already picked
+date already picked 
+
 
 -Mettre a jour >> Patch req refreshing the page [If name already exist error handler ]
 

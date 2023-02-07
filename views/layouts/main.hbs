@@ -35,33 +35,6 @@
 
 	<script>
 
-		//ARRAY
-		const dates = ["12 Fevrier", "26 Fevrier", "12 Mars", "9 Avril", "23 Avril","7 Mai", "4 juin", "18 juin"]
-
-		let items = []
-
-		//Populate dropdown values 
-		dates.forEach(date=>{
-			items.push({
-				name: date,
-                value: date
-			})
-		})
-
-		//SEMANTIC DROPDOWN INIT
-		$('#dropdown')
-        .dropdown({
-            values: items,
-			placeholder: "Choisissez une date"
-        })
-        ;
-		$('#modal_dropdown')
-        .dropdown({
-            values: items,
-			placeholder: "Modifiez la date"
-        })
-        ;
-
 		//Bootstrap modal init
 		const exampleModal = document.getElementById('exampleModal')
 		exampleModal.addEventListener('show.bs.modal', event => 
