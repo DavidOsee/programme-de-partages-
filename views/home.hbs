@@ -59,18 +59,22 @@
                 </thead>
                 <tbody>
                     <tfoot class="bg-light">
-                    <tr><th colspan="5">
-                        <div class="ui right floated pagination menu">
-                            <input type="hidden" id="rightVal" value="1" />
-                            <input type="hidden" id="leftVal" value="1" />
+                    <tr>
+                        <th colspan="5">
+                            <form action="/download" method="GET">
+                                <button class="ui left floated primary button" type="submit">Telecharger</button>
+                            </form>
+                            <div class="ui right floated pagination menu">
+                                <input type="hidden" id="rightVal" value="1" />
+                                <input type="hidden" id="leftVal" value="1" />
 
-                            <a class="icon item" id="left_nav">
-                            <i class="left chevron icon"></i>
-                            </a>
-                            <a class="icon item" id="right_nav">
-                            <i class="right chevron icon"></i>
-                            </a>
-                        </div>
+                                <a class="icon item" id="left_nav">
+                                <i class="left chevron icon"></i>
+                                </a>
+                                <a class="icon item" id="right_nav">
+                                <i class="right chevron icon"></i>
+                                </a>
+                            </div>
                         </th>
                     </tr>
                 </tfoot>

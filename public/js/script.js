@@ -16,7 +16,7 @@ $(document).ready(function(){
                 <td class="text-truncate" style="max-width: 100px;">${name}</td>
                 <td class="text-truncate" style="max-width: 155px;">${theme}</td>
                 <td class="text-truncate" style="max-width: 100px;">${date}</td>
-                <td><button class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-name="${name}" data-bs-theme="${theme}" data-bs-date="${date}" >Editer</button>
+                <td><button class="ui primary button edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-name="${name}" data-bs-theme="${theme}" data-bs-date="${date}" >Editer</button>
                 </td>
             </tr>
             `)
