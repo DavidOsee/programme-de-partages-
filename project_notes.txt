@@ -16,21 +16,21 @@ JS
 BACK & FRONT
 Remove date from ddown_array if already picked [DONE]
 
+
+
 -Onload send array data to view and use it for Validation In case Name already exists or 
 date already picked 
-
 
 -Mettre a jour >> Patch req refreshing the page [If name already exist error handler ]
 
 
-WRITTING AND DOWNLOADING EXCEL FILE []
+WRITTING AND DOWNLOADING EXCEL FILE [DONE]
  
 DB
 - name
 - theme (not required) [default value]
 - date 
 
-SERVER REQ
 
 
 GIT & DEPLOY 

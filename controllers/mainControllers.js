@@ -3,130 +3,138 @@ const path = require('path')
 const mime = require('mime')
 const xl = require('excel4node')
 
-//FETCH DATA 
-let data = 
-    [
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "12 Fevrier",
-            orateur_id: "1"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "2"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "3"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "4"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "5"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : "6"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "7"
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "8"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : "9"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "10"
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : "11"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "12"
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "13"
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : "14"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "15"
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "16"
-    
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id : "17"
-        },
-        {
-            name : "Jean Pierre Francois", 
-            theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
-            date : "26 Fevrier",
-            orateur_id: "18"
-    
-        }
-    ]
+//Bring in models
+const Orateur = require('../models/orateur')
 
+
+//FETCH DATA 
+// let data = 
+//     [
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "12 Fevrier",
+//             orateur_id: "1"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "2"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "3"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "4"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "5"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id : "6"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "7"
+    
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "8"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id : "9"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "10"
+    
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id : "11"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "12"
+    
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "13"
+    
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id : "14"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "15"
+    
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "16"
+    
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id : "17"
+//         },
+//         {
+//             name : "Jean Pierre Francois", 
+//             theme : "La soif de voir la gloire de Dieu et devenir cette gloire Texte: exode 33:18-23", 
+//             date : "26 Fevrier",
+//             orateur_id: "18"
+    
+//         }
+//     ]
     
 
 //HOME VIEW 
 const Home = asyncHandler(async(req, res)=>{
+
+    //Get data from DB
+    const data = await Orateur.find()
+
+    console.log(data)
 
     //Stringify data
     const json_data = JSON.stringify(data)
@@ -146,14 +154,20 @@ const Home = asyncHandler(async(req, res)=>{
 const Ajouter = asyncHandler(async(req, res)=>{
 
     //Get Form data
-    const {name, theme, date} = req.body
+    const {nom, theme, date} = req.body
 
     //Check name
 
     //Check date
 
     //Add in DB 
-    console.log(req.body)
+    await Orateur.create({
+        name : nom, 
+        theme : theme,
+        date : date
+
+    })
+    
     //Feedback to view 
     res.send("success")
 
@@ -174,6 +188,7 @@ const Editer = asyncHandler(async(req, res)=>{
     //Add in DB 
 
     console.log(req.body)
+
     //Feedback to view 
     res.send("Modal success")
 

@@ -3,6 +3,7 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
+const connectDB = require('./config/db')
 
 //PARSERS 
 app.use(express.json())
@@ -31,6 +32,10 @@ app.use(errorHandler)
 //ROUTES 
 const mainRoutes = require('./routes/mainRoutes')
 app.use('/', mainRoutes)
+
+
+//CONNECT DB 
+connectDB()
 
 
 //EXPORT TO INDEX 
