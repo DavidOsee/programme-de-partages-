@@ -5,7 +5,6 @@ Table
 - Add pagination to table [DONE]
 - Add modal holding row details after clicking on EDIT [DONE]
 
-
 JS
 - Validate adding & edit forms  [Restrict data length] [Done]
 -Add active, selected to modal-item on click "Edit" [DONE]
@@ -15,18 +14,25 @@ JS
 
 BACK & FRONT
 Remove date from ddown_array if already picked [DONE]
+-Onload send array data to view  [DONE]
 
 
+-Sweet alerts on Form submissions [DONE] 
+-Git hub repo link [DONE]
+-Unknown routes
+-Ajouter >> Validation In case Name already exists [DONE]
+-remove download and pagination when empty table [DONE]
 
--Onload send array data to view and use it for Validation In case Name already exists or 
-date already picked 
+-Increment table data
+document.getElementById("myTable").rows.length
+
 
 -Mettre a jour >> Patch req refreshing the page [If name already exist error handler ]
 
 
 WRITTING AND DOWNLOADING EXCEL FILE [DONE]
  
-DB
+DB [DONE]
 - name
 - theme (not required) [default value]
 - date 
@@ -39,5 +45,4 @@ GIT & DEPLOY
 
 Later
 - Add table filtering 
-- Download table data into Excel file 
 - Add checkbox Fr/Sr before submitting  and add (Fr./Sr.)in table data

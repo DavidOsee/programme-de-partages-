@@ -128,13 +128,11 @@ const Orateur = require('../models/orateur')
 //     ]
     
 
-//HOME VIEW 
+//HOME VIEW @/ [GET]
 const Home = asyncHandler(async(req, res)=>{
 
     //Get data from DB
     const data = await Orateur.find()
-
-    console.log(data)
 
     //Stringify data
     const json_data = JSON.stringify(data)
@@ -150,16 +148,69 @@ const Home = asyncHandler(async(req, res)=>{
 
 
 
-//FORM SUBMISSION 
+//FORM SUBMISSION @/add [POST]
 const Ajouter = asyncHandler(async(req, res)=>{
 
     //Get Form data
     const {nom, theme, date} = req.body
 
-    //Check name
+    //Trim name in case
+    const name  = nom.trim()
 
-    //Check date
+    //Get data from DB
+    const data = await Orateur.find()
 
+    //Check name & date
+    const existing_name = data.some(d=> name.toLowerCase() === d.name.toLowerCase())
+    const existing_date = data.some(d=> date == d.date)
+
+    if(existing_name){
+        res.send('-1') //error - existing name
+        return false
+    }
+       
+
+    if(existing_date){
+        res.send('-2') //error - existing date [Just for double security]
+        return false
+    }
+       
+    //Add in DB 
+    await Orateur.create({
+        name : name, 
+        theme : theme,
+        date : date
+    })
+    
+    //Positive feedback to view 
+    res.send('1')
+
+})
+
+
+
+//FORM EDITION @/edit [PATCH]
+const Editer = asyncHandler(async(req, res)=>{
+
+    //Get Form data
+    const {modal_name, modal_theme, modal_date} = req.body
+
+
+    //Get data from DB
+    const db_data = await Orateur.find()
+
+    //Check name & date
+    const existing_name = db_data.some(d=> nom == d.name)
+    const existing_date = db_data.some(d=> nom == d.date)
+
+    if(existing_name)
+        res.send(-1) //error - existing name
+
+    if(existing_date)
+        res.send(-2) //error - existing date [Just for double security]
+
+    console.log(existing_name);
+    return 
     //Add in DB 
     await Orateur.create({
         name : nom, 
@@ -167,30 +218,9 @@ const Ajouter = asyncHandler(async(req, res)=>{
         date : date
 
     })
-    
-    //Feedback to view 
-    res.send("success")
 
-})
-
-
-
-//FORM EDITION
-const Editer = asyncHandler(async(req, res)=>{
-
-    //Get Form data
-    const {modal_name, modal_theme, modal_date} = req.body
-
-    //Check name
-
-    //Check date
-
-    //Add in DB 
-
-    console.log(req.body)
-
-    //Feedback to view 
-    res.send("Modal success")
+    //Positive feedback to view 
+    res.send(1)
 
 })
 
@@ -218,7 +248,7 @@ const createExcelFile = () => {
 
 }
 
-//EXCEL FILE SYSTEM
+//EXCEL FILE SYSTEM @/download [GET]
 const DownloadFile = asyncHandler(async(req, res)=>{
     //
     createExcelFile()

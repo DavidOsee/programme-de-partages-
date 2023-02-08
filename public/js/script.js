@@ -1,11 +1,32 @@
 $(document).ready(function(){
 
-
     //-- TABLE
 
     //Get data
+    let db_data = []
+    
+    db_data  = JSON.parse($('input#data').val())
+
+    //Hide Download and pagination if data is empty 
+    if(db_data.length == 0){
+        $('#downloadBtn').hide()
+        $('#pagination').hide()
+        $('table').after('<div class="ui icon message"><i aria-hidden="true" class="circle notched loading icon"></i><div class="content"><div class="header">Humm, aucune entrée!</div>La liste est encore vide pour le moment.</div></div>')
+    }
+
+    //TRANSFER DB_DATA IN NEW ARRAY WITH INDEXES
     let data = []
-    data  = JSON.parse($('input#data').val())
+    if(db_data.length > 0){
+        db_data.forEach((d, index) => {
+            let no = index +1 
+            data.push({
+                orateur_id : no, 
+                name : d.name, 
+                theme : (d.theme == "")? "Pas mentionné" : d.theme,
+                date : d.date
+            })
+        });
+    }
 
     //Data content
     const dataContent = (id, name, theme, date)=>{
@@ -23,24 +44,17 @@ $(document).ready(function(){
     }
 
 
-    //Position ref
-    let rightRef = parseInt($('#rightVal').val()) //1
+    //Position ref for pagination
+    let pag_ref = parseInt($('#page_ref').val()) //DEFAULT : 1
 
     //Min data to display 
     let minData = 5
 
-    //Populate table
-    if(rightRef == 1)
+    
+    if(pag_ref == 1)
     {
-        // data.map((d, index)=>{
-        //     //First 5 data
-        //     if(index < minData)
-        //     {
-        //         //Display in table
-        //         dataContent(d.orateur_id, d.name, d.theme, d.date)
-        //     }
-        // })
-        for(i=rightRef-1; i<5; i++)
+
+        for(i=pag_ref-1; i<5; i++)
             dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
     }
 
@@ -49,20 +63,20 @@ $(document).ready(function(){
     {
 
         //Decrement ref
-        if(rightRef != 1)
-            rightRef -=1
+        if(pag_ref != 1)
+            pag_ref -=1
         
-        else if(rightRef == 1)
+        else if(pag_ref == 1)
             alert("Impossible de reculer d'avantage")
 
-        console.log(rightRef)
+        console.log(pag_ref)
 
         //Empty tbody
         $('table tbody').html("")
 
-        const init = 5*(rightRef-1)
+        const init = 5*(pag_ref-1)
 
-        for(i=init; i<rightRef*5; i++)
+        for(i=init; i<pag_ref*5; i++)
             dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
 
     })
@@ -71,18 +85,18 @@ $(document).ready(function(){
     $('#right_nav').on('click', ()=>{
 
         //Increment ref
-        if(rightRef < Math.round(data.length/5))
-            rightRef +=1
+        if(pag_ref < Math.round(data.length/5))
+            pag_ref +=1
 
-        else if(rightRef >= Math.round(data.length/5))
+        else if(pag_ref >= Math.round(data.length/5))
             alert("C'est tout!")
 
          //Empty tbody
          $('table tbody').html("")
 
-        const init = 5*(rightRef-1)
+        const init = 5*(pag_ref-1)
 
-        for(i=init; i<rightRef*5; i++)
+        for(i=init; i<pag_ref*5; i++)
             dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
      
     })
@@ -113,15 +127,47 @@ $(document).ready(function(){
             url: '/add',
             type: "POST",
             data: form_data,
-            success: function (data) {
-              console.log(data)
+            success: function (data) 
+            {
+                console.log(data)
+              if(data == '-1'){ //On existing name
+                console.log(data)
+                swal({
+                    title: "Oops!",
+                    text: "Le nom que vous avez entré existe deja!",
+                    icon: "warning",
+                    button: "C'est compris!"
+                });
+                return false
+              }
+              if(data == '-2'){ //On existing name
+                swal({
+                    title: "Oops!",
+                    text: "La date que vous avez entré a déjà été selectionnée!",
+                    icon: "warning",
+                    button: "C'est compris!"
+                }); 
+                return false
+              }
+
+                //On success
+                swal({
+                    title: "Good job!",
+                    text: "Vous etes notre prochain orateur!",
+                    icon: "success",
+                    button: "Gloire à Dieu!"
+                });
+
+                //RESET FORM
+                $('form#ajouter').trigger('reset')
+                // $('.ui .dropdown').dropdown('restore defaults')
             },
             error: function (xhr, exception) {
                 console.log(exception)
             }
-          })
+        })
       
-    })
+    }) //AJOUTER
 
 
     //SUBMIT EDITER FORM 

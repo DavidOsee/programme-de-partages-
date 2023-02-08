@@ -21,7 +21,6 @@
 
     <div class="row">
         <div class="col-lg-5 col-md col-sm-12 mb-5">
-            <input type="hidden" id="data" value="{{json_data}}" />
             <div class="ui segment">
                 <h2 class="ui left floated header">Formulaire</h2>
                 <div class="ui clearing divider"></div>
@@ -47,6 +46,7 @@
             </div>
         </div>
         <div class="col-lg-7 col-md col-sm mb-5">
+            <input type="hidden" id="data" value="{{json_data}}" />
             <table class="table table-bordered">
                 <thead class="bg-light">
                     <tr>
@@ -62,11 +62,10 @@
                     <tr>
                         <th colspan="5">
                             <form action="/download" method="GET">
-                                <button class="ui left floated primary button" type="submit">Telecharger</button>
+                                <button class="ui left floated primary button" type="submit" id="downloadBtn">Telecharger</button>
                             </form>
-                            <div class="ui right floated pagination menu">
-                                <input type="hidden" id="rightVal" value="1" />
-                                <input type="hidden" id="leftVal" value="1" />
+                            <div class="ui right floated pagination menu" id="pagination">
+                                <input type="hidden" id="page_ref" value="1" />
 
                                 <a class="icon item" id="left_nav">
                                 <i class="left chevron icon"></i>
@@ -135,7 +134,7 @@
     //DATE DATA 
     const dates_data = ["12 Fevrier", "26 Fevrier", "12 Mars", "9 Avril", "23 Avril","7 Mai", "4 juin", "18 juin"]
 
-    const fictif = ["12 Fevrier", "26 Fevrier", "12 Mars", "18 juin"]
+    //const fictif = ["12 Fevrier", "26 Fevrier", "12 Mars", "18 juin"]
 
 
     //GET PICKED DATES SAVED IN DB 
@@ -147,7 +146,7 @@
     let filtered_dates = [];
     
     dates_data.map(d=>{
-        if(!fictif.includes(d))
+        if(!db_dates_array.includes(d))
             filtered_dates.push(d)
     })
     
@@ -177,5 +176,12 @@
         placeholder: "Modifiez la date"
     })
     ;    
+
+    //IF LIST OF DATES / DROPDOWN IS EMPTY 
+    $('.ui .dropdown').on('click', ()=>{
+        if(items.length == 0)
+            alert("Toutes les dates sont prise!")
+    })
+    
 
 </script>
