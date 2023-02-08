@@ -22,15 +22,16 @@ $(document).ready(function(){
             data.push({
                 orateur_id : no, 
                 name : d.name, 
-                theme : (d.theme == "")? "Pas mentionné" : d.theme,
+                theme : (d.theme == "")? "Pas encore révélé" : d.theme,
                 date : d.date
             })
         });
     }
 
-    //Data content
+    //TABLE LENGTH
+    
+    //Data content to populate THE HTML TABLE
     const dataContent = (id, name, theme, date)=>{
-
         $('table tbody').append(`
             <tr>
                 <td class="_id">${id}</td>
@@ -38,6 +39,17 @@ $(document).ready(function(){
                 <td class="text-truncate" style="max-width: 155px;">${theme}</td>
                 <td class="text-truncate" style="max-width: 100px;">${date}</td>
                 <td><button class="ui primary button edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-name="${name}" data-bs-theme="${theme}" data-bs-date="${date}" >Editer</button>
+                </td>
+            </tr>
+            `)
+    }
+
+    //EMPTY Data content to populate THE HTML TABLE
+    const EmptyDataContent = ()=>{
+        $('table tbody').append(`
+            <tr>
+                <td colspan="5">
+                    <button class="ui left floated disabled button">&nbsp;</button>
                 </td>
             </tr>
             `)
@@ -69,15 +81,22 @@ $(document).ready(function(){
         else if(pag_ref == 1)
             alert("Impossible de reculer d'avantage")
 
-        console.log(pag_ref)
-
         //Empty tbody
         $('table tbody').html("")
 
         const init = 5*(pag_ref-1)
 
-        for(i=init; i<pag_ref*5; i++)
-            dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
+        for(i=init; i<pag_ref*5; i++){ 
+
+            if(typeof data[i] === "undefined"){
+                //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
+                EmptyDataContent("", "", "", "")
+                return false
+            }
+            dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date, '')
+        }
+
+       
 
     })
 
@@ -91,15 +110,26 @@ $(document).ready(function(){
         else if(pag_ref >= Math.round(data.length/5))
             alert("C'est tout!")
 
-         //Empty tbody
-         $('table tbody').html("")
+        //Empty tbody
+        $('table tbody').html("")
 
         const init = 5*(pag_ref-1)
-
-        for(i=init; i<pag_ref*5; i++)
+        
+        for(i=init; i<pag_ref*5; i++){
+            if(typeof data[i] === "undefined"){
+                //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
+                EmptyDataContent("", "", "", "")
+                return false
+            }
             dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
-     
+        }
+        
+        
+        console.log( $('table tbody tr').length )
     })
+
+
+    
 
     //SUBMIT AJOUTER FORM
     $('form#ajouter').on('submit', (e)=>{

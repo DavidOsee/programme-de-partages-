@@ -23,7 +23,7 @@ Remove date from ddown_array if already picked [DONE]
 -Ajouter >> Validation In case Name already exists [DONE]
 -remove download and pagination when empty table [DONE]
 
--Increment table data
+-Get table data count [DONE]
 document.getElementById("myTable").rows.length
 
 
