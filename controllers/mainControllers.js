@@ -193,29 +193,36 @@ const Ajouter = asyncHandler(async(req, res)=>{
 const Editer = asyncHandler(async(req, res)=>{
 
     //Get Form data
-    const {modal_name, modal_theme, modal_date} = req.body
+    const {id, modal_name, modal_theme, modal_date} = req.body
 
+    console.log(req.body)
 
     //Get data from DB
     const db_data = await Orateur.find()
 
+    //Trim name in case
+    const name  = modal_name.trim()
+
     //Check name & date
-    const existing_name = db_data.some(d=> nom == d.name)
-    const existing_date = db_data.some(d=> nom == d.date)
+    const existing_name = db_data.some(d=> name.toLowerCase() === d.name.toLowerCase())
+    const existing_date = db_data.some(d=> modal_date == d.date)
 
-    if(existing_name)
-        res.send(-1) //error - existing name
+    if(existing_name){
+        res.send('-1') //error - existing name
+        return false
+    }
+       
 
-    if(existing_date)
-        res.send(-2) //error - existing date [Just for double security]
+    if(existing_date){
+        res.send('-2') //error - existing date [Just for double security]
+        return false
+    }
 
-    console.log(existing_name);
-    return 
-    //Add in DB 
-    await Orateur.create({
-        name : nom, 
-        theme : theme,
-        date : date
+    //UPDATE DATA IN DB 
+    await Orateur.findByIdAndUpdate({id,
+        name : name, 
+        theme : modal_theme,
+        date : modal_date
 
     })
 

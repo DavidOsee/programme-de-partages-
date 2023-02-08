@@ -20,6 +20,7 @@ $(document).ready(function(){
         db_data.forEach((d, index) => {
             let no = index +1 
             data.push({
+                _id : d._id,
                 orateur_id : no, 
                 name : d.name, 
                 theme : (d.theme == "")? "Pas encore révélé" : d.theme,
@@ -31,29 +32,30 @@ $(document).ready(function(){
     //TABLE LENGTH
     
     //Data content to populate THE HTML TABLE
-    const dataContent = (id, name, theme, date)=>{
+    const dataContent = (_id, id, name, theme, date)=>{
         $('table tbody').append(`
             <tr>
                 <td class="_id">${id}</td>
                 <td class="text-truncate" style="max-width: 100px;">${name}</td>
                 <td class="text-truncate" style="max-width: 155px;">${theme}</td>
                 <td class="text-truncate" style="max-width: 100px;">${date}</td>
-                <td><button class="ui primary button edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-name="${name}" data-bs-theme="${theme}" data-bs-date="${date}" >Editer</button>
+                <td>
+                    <button class="ui primary button edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-id="${_id}" data-bs-name="${name}" data-bs-theme="${theme}" data-bs-date="${date}" >Editer</button>
                 </td>
             </tr>
             `)
     }
 
     //EMPTY Data content to populate THE HTML TABLE
-    const EmptyDataContent = ()=>{
-        $('table tbody').append(`
-            <tr>
-                <td colspan="5">
-                    <button class="ui left floated disabled button">&nbsp;</button>
-                </td>
-            </tr>
-            `)
-    }
+    // const EmptyDataContent = ()=>{
+    //     $('table tbody').append(`
+    //         <tr>
+    //             <td colspan="5">
+    //                 <button class="ui disabled button">&nbsp;</button>
+    //             </td>
+    //         </tr>
+    //         `)
+    // }
 
 
     //Position ref for pagination
@@ -66,8 +68,17 @@ $(document).ready(function(){
     if(pag_ref == 1)
     {
 
-        for(i=pag_ref-1; i<5; i++)
-            dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
+        for(i=pag_ref-1; i<5; i++){ 
+
+            // if(typeof data[i] === "undefined"){
+            //     //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
+            //     EmptyDataContent("", "", "", "")
+            //     return false
+            // }
+
+            dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
+        
+        }
     }
 
     //Left navigation
@@ -88,12 +99,12 @@ $(document).ready(function(){
 
         for(i=init; i<pag_ref*5; i++){ 
 
-            if(typeof data[i] === "undefined"){
-                //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
-                EmptyDataContent("", "", "", "")
-                return false
-            }
-            dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date, '')
+            // if(typeof data[i] === "undefined"){
+            //     //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
+            //     EmptyDataContent("", "", "", "")
+            //     return false
+            // }
+            dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date, '')
         }
 
        
@@ -116,16 +127,13 @@ $(document).ready(function(){
         const init = 5*(pag_ref-1)
         
         for(i=init; i<pag_ref*5; i++){
-            if(typeof data[i] === "undefined"){
-                //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
-                EmptyDataContent("", "", "", "")
-                return false
-            }
-            dataContent(data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
+            // if((typeof data[i] === "undefined")){
+            //     //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
+            //     dataContent("", "", "", "")
+            // }
+            dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
         }
         
-        
-        console.log( $('table tbody tr').length )
     })
 
 
@@ -159,7 +167,6 @@ $(document).ready(function(){
             data: form_data,
             success: function (data) 
             {
-                console.log(data)
               if(data == '-1'){ //On existing name
                 console.log(data)
                 swal({
@@ -224,10 +231,41 @@ $(document).ready(function(){
         //Ajax 
         $.ajax({
             url: '/edit',
-            type: "PATCH",
+            type: "PUT",
             data: modal_data,
             success: function (data) {
               console.log(data)
+              if(data == '-1'){ //On existing name
+                console.log(data)
+                swal({
+                    title: "Oops!",
+                    text: "Le nom que vous avez entré existe deja!",
+                    icon: "warning",
+                    button: "C'est compris!"
+                });
+                return false
+              }
+              if(data == '-2'){ //On existing name
+                swal({
+                    title: "Oops!",
+                    text: "La date que vous avez entré a déjà été selectionnée!",
+                    icon: "warning",
+                    button: "C'est compris!"
+                }); 
+                return false
+              }
+
+                //On success
+                swal({
+                    title: "Good job!",
+                    text: "Vous etes notre prochain orateur!",
+                    icon: "success",
+                    button: "Gloire à Dieu!"
+                });
+
+                //RESET FORM
+                $('form#ajouter').trigger('reset')
+                $('form#editer').trigger('reset')
             },
             error: function (xhr, exception) {
                 console.log(exception)

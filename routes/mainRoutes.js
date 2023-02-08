@@ -9,7 +9,7 @@ router.get('/download', DownloadFile)
 
 //POST 
 router.post('/add', Ajouter)
-router.patch('/edit', Editer)
+router.put('/edit', Editer)
 
 //EXPORTS TO SERVER 
 module.exports = router 

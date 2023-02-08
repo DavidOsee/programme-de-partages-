@@ -48,6 +48,7 @@
 			// Button that triggered the modal
 			const button = event.relatedTarget
 			// Extract info from data-bs-* attributes
+			const id = button.getAttribute('data-bs-id')
 			const nom = button.getAttribute('data-bs-name')
 			const theme = button.getAttribute('data-bs-theme')
 			const tableDate = button.getAttribute('data-bs-date')
@@ -55,12 +56,14 @@
 			// and then do the updating in a callback.
 			//
 			// Update the modal's content.
+			const modalId = exampleModal.querySelector('#modal_id')
 			const modalName = exampleModal.querySelector('.modal-name')
 			const modalTheme = exampleModal.querySelector('.modal-theme')
 
 			//Load values
 			modalName.value = nom
 			modalTheme.value = theme
+			modalId.value = id
 
 		})
 

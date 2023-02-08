@@ -24,10 +24,9 @@ Remove date from ddown_array if already picked [DONE]
 -remove download and pagination when empty table [DONE]
 
 -Get table data count [DONE]
-document.getElementById("myTable").rows.length
 
 
--Mettre a jour >> Patch req refreshing the page [If name already exist error handler ]
+-Mettre a jour >> PUT req refreshing the page (If name already exist error handler ) [DONE]
 
 
 WRITTING AND DOWNLOADING EXCEL FILE [DONE]

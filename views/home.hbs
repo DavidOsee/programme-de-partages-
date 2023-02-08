@@ -44,11 +44,34 @@
                         <div class="ui error message"></div>
                     </form>
             </div>
-        </div>
+        </div><br><br>
         <div class="col-lg-7 col-md col-sm mb-5">
             <input type="hidden" id="data" value="{{json_data}}" />
+
+            <div>
+                
+            </div>
+
             <table class="table table-bordered">
                 <thead class="bg-light">
+                    <tr>
+                        <th colspan="5">
+                            <form action="/download" method="GET">
+                            <button class="ui left floated primary button" type="submit" id="downloadBtn"><i class="file excel icon"></i>Telecharger</button>
+                            </form>
+                            <div class="ui right floated pagination menu" id="pagination">
+                                <input type="hidden" id="page_ref" value="1" />
+
+                                <a class=" ui blue button icon item" id="left_nav">
+                                    <i class="left chevron icon"></i>
+                                        Precedent
+                                </a>
+                                <a class="icon ui blue button item" id="right_nav"> Suivant
+                                <i class="right chevron icon"></i>
+                                </a>
+                            </div>
+                        </th>
+                    </tr>
                     <tr>
                         <th>NO</th>
                         <th>ORATEUR</th>
@@ -61,20 +84,7 @@
                     <tfoot class="bg-light">
                     <tr>
                         <th colspan="5">
-                            <form action="/download" method="GET">
-                                <button class="ui left floated primary button" type="submit" id="downloadBtn"><i class="file excel icon"></i>Telecharger</button>
-                            </form>
-                            <div class="ui right floated pagination menu" id="pagination">
-                                <input type="hidden" id="page_ref" value="1" />
-
-                                <a class="icon item" id="left_nav">
-                                    <i class="left chevron icon"></i>
-                                      Pre
-                                </a>
-                                <a class="icon item" id="right_nav"> Sui 
-                                <i class="right chevron icon"></i>
-                                </a>
-                            </div>
+                            
                         </th>
                     </tr>
                 </tfoot>
@@ -94,6 +104,9 @@
                 <div class="modal-body">
                    <form class="ui form" id="editer">
                         <div class="field">
+                            {{!-- DB _id --}}
+                            <input type="hidden" value="" class="modal-id" name="id" id="modal_id" />
+
                             <input type="text" class="modal-name" name="nom" placeholder="Votre nom" maxlength="20">
                         </div>
                         <div class="field">
