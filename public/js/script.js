@@ -271,9 +271,9 @@ $(document).ready(function(){
                 //On success
                 swal({
                     title: "Félicitations!",
-                    text: "Vous etes notre prochain orateur!",
+                    text: "Vos informations sont à jour!",
                     icon: "success",
-                    button: "Gloire à Dieu!"
+                    button: "Merci Seigneur!"
                 }).then(()=> { window.location = "/"});
 
                 //RESET FORM
