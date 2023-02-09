@@ -126,7 +126,53 @@ const Orateur = require('../models/orateur')
     
 //         }
 //     ]
-    
+
+
+const dates_data = ["12 Fevrier", "26 Fevrier", "12 Mars", "26 Mars", "9 Avril", "23 Avril","7 Mai", "21 Mai"]
+
+
+//ASSIGN POS_ID BASED ON DATE 
+const Set_pos_id = (body_date) => {
+    switch(body_date)
+    { 
+        case "12 Fevrier" :
+            return 1
+            break
+        case "26 Fevrier" : 
+            return 2
+            break
+        case "12 Mars" : 
+        return 3
+        break
+
+        case "26 Mars" : 
+        return 4
+        break
+
+        case "9 Avril" : 
+        return 5
+        break
+
+        case "23 Avril" : 
+        return 6
+        break
+
+        case "7 Mai" : 
+        return 7
+        break
+
+        case "21 Mai" : 
+        return 8
+        break
+
+        default : 
+         return null
+    }
+}
+
+
+
+
 
 //HOME VIEW @/ [GET]
 const Home = asyncHandler(async(req, res)=>{
@@ -142,7 +188,7 @@ const Home = asyncHandler(async(req, res)=>{
     data.map((d, index)=> {
         dates.push(d.date)
     })
-
+   
     res.render('home', {json_data, dates})
 })
 
@@ -177,6 +223,7 @@ const Ajouter = asyncHandler(async(req, res)=>{
        
     //Add in DB 
     await Orateur.create({
+        pos_id : Set_pos_id(date),
         name : name, 
         theme : theme,
         date : date
@@ -193,24 +240,25 @@ const Ajouter = asyncHandler(async(req, res)=>{
 const Editer = asyncHandler(async(req, res)=>{
 
     //Get Form data
-    const {id, modal_name, modal_theme, modal_date} = req.body
-
-    console.log(req.body)
+    const {id, nom, theme, date} = req.body
 
     //Get data from DB
     const db_data = await Orateur.find()
 
     //Trim name in case
-    const name  = modal_name.trim()
+    const name  = nom.trim()
 
     //Check name & date
     const existing_name = db_data.some(d=> name.toLowerCase() === d.name.toLowerCase())
-    const existing_date = db_data.some(d=> modal_date == d.date)
+    const existing_date = db_data.some(d=> date == d.date)
 
-    if(existing_name){
-        res.send('-1') //error - existing name
-        return false
-    }
+    console.log(existing_name)
+    console.log(existing_date)
+
+    // if(existing_name){
+    //     res.send('-1') //error - existing name
+    //     return false
+    // }
        
 
     if(existing_date){
@@ -219,21 +267,38 @@ const Editer = asyncHandler(async(req, res)=>{
     }
 
     //UPDATE DATA IN DB 
-    await Orateur.findByIdAndUpdate({id,
-        name : name, 
-        theme : modal_theme,
-        date : modal_date
-
-    })
+    await Orateur.findByIdAndUpdate(id,{ 
+        pos_id : Set_pos_id(date),
+        theme : theme,
+        date : date
+    }, { new : true})
 
     //Positive feedback to view 
-    res.send(1)
+    res.send('1')
 
 })
 
 
 //CREATE EXCEL FILE 
-const createExcelFile = () => {
+const CreateExcelFile = asyncHandler(async() => {
+
+    //Get data from DB
+    const dbData = await Orateur.find()
+
+    //SORT THE DATA FIRST 
+    const db_data = dbData.sort((a,b) => { return a.pos_id - b.pos_id })
+
+    //Recreate data obj
+    let file_data = []
+
+    db_data.map(d=> {
+        file_data.push({
+            nom : d.name, 
+            theme : d.theme, 
+            date : d.date 
+        })
+    })
+
 
     const headerColumns = ["Nom", "Theme(facultatif)", "Date"]
 
@@ -244,7 +309,7 @@ const createExcelFile = () => {
         ws.cell(1, colIndex++).string(item)
     })
     let rowIndex = 2;
-    data.forEach((item) => {
+    file_data.forEach((item) => {
         let columnIndex = 1;
         Object.keys(item).forEach((colName) => {
             ws.cell(rowIndex, columnIndex++).string(item[colName])
@@ -253,12 +318,12 @@ const createExcelFile = () => {
     })
     wb.write("programme_de_partages.xlsx")
 
-}
+})
 
 //EXCEL FILE SYSTEM @/download [GET]
 const DownloadFile = asyncHandler(async(req, res)=>{
     //
-    createExcelFile()
+    CreateExcelFile()
 
     const file = "programme_de_partages.xlsx"
 
@@ -271,7 +336,7 @@ const DownloadFile = asyncHandler(async(req, res)=>{
 
     setTimeout(() => {
         res.download(file)
-    }, 2000);
+    }, 1000);
 })
 
 

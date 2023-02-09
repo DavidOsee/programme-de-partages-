@@ -3,9 +3,19 @@ $(document).ready(function(){
     //-- TABLE
 
     //Get data
-    let db_data = []
+    let db_d = []
     
-    db_data  = JSON.parse($('input#data').val())
+    db_d  = JSON.parse($('input#data').val())
+
+    //SORT DATA
+    const db_data = db_d.sort((a,b) => { return a.pos_id - b.pos_id })
+
+
+    // db_data.forEach(el=>{
+      
+    //     console.log(el.name)
+    // })
+    
 
     //Hide Download and pagination if data is empty 
     if(db_data.length == 0){
@@ -28,8 +38,6 @@ $(document).ready(function(){
             })
         });
     }
-
-    //TABLE LENGTH
     
     //Data content to populate THE HTML TABLE
     const dataContent = (_id, id, name, theme, date)=>{
@@ -65,19 +73,15 @@ $(document).ready(function(){
     let minData = 5
 
     
-    if(pag_ref == 1)
+    //POPULATE THE TABLE
+    if(pag_ref == 1 && db_data.length > 0)
     {
 
         for(i=pag_ref-1; i<5; i++){ 
 
-            // if(typeof data[i] === "undefined"){
-            //     //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
-            //     EmptyDataContent("", "", "", "")
-            //     return false
-            // }
-
-            dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
-        
+            if(typeof data[i] != "undefined"){
+                dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
+            }
         }
     }
 
@@ -99,12 +103,10 @@ $(document).ready(function(){
 
         for(i=init; i<pag_ref*5; i++){ 
 
-            // if(typeof data[i] === "undefined"){
-            //     //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
-            //     EmptyDataContent("", "", "", "")
-            //     return false
-            // }
-            dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date, '')
+            if(typeof data[i] != "undefined"){
+                dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date, '')
+            }
+            
         }
 
        
@@ -115,7 +117,7 @@ $(document).ready(function(){
     $('#right_nav').on('click', ()=>{
 
         //Increment ref
-        if(pag_ref < Math.round(data.length/5))
+        if(pag_ref <= Math.round(data.length/5))
             pag_ref +=1
 
         else if(pag_ref >= Math.round(data.length/5))
@@ -127,11 +129,9 @@ $(document).ready(function(){
         const init = 5*(pag_ref-1)
         
         for(i=init; i<pag_ref*5; i++){
-            // if((typeof data[i] === "undefined")){
-            //     //ADD ADDITIONAL ROWS TO TABLE WHEN TOTAL ROWS < 5
-            //     dataContent("", "", "", "")
-            // }
-            dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
+            if((typeof data[i] != "undefined")){
+                dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
+            }
         }
         
     })
@@ -180,7 +180,7 @@ $(document).ready(function(){
               if(data == '-2'){ //On existing name
                 swal({
                     title: "Oops!",
-                    text: "La date que vous avez entré a déjà été selectionnée!",
+                    text: "Nous avons déjà un orateur programmé pour cette date!",
                     icon: "warning",
                     button: "C'est compris!"
                 }); 
@@ -189,11 +189,11 @@ $(document).ready(function(){
 
                 //On success
                 swal({
-                    title: "Good job!",
+                    title: "Félicitations!",
                     text: "Vous etes notre prochain orateur!",
                     icon: "success",
                     button: "Gloire à Dieu!"
-                });
+                }).then(()=> { window.location = "/"});
 
                 //RESET FORM
                 $('form#ajouter').trigger('reset')
@@ -248,7 +248,7 @@ $(document).ready(function(){
               if(data == '-2'){ //On existing name
                 swal({
                     title: "Oops!",
-                    text: "La date que vous avez entré a déjà été selectionnée!",
+                    text: "Nous avons déjà un orateur programmé pour cette date!",
                     icon: "warning",
                     button: "C'est compris!"
                 }); 
@@ -257,11 +257,11 @@ $(document).ready(function(){
 
                 //On success
                 swal({
-                    title: "Good job!",
+                    title: "Félicitations!",
                     text: "Vous etes notre prochain orateur!",
                     icon: "success",
                     button: "Gloire à Dieu!"
-                });
+                }).then(()=> { window.location = "/"});
 
                 //RESET FORM
                 $('form#ajouter').trigger('reset')

@@ -107,7 +107,10 @@
                             {{!-- DB _id --}}
                             <input type="hidden" value="" class="modal-id" name="id" id="modal_id" />
 
-                            <input type="text" class="modal-name" name="nom" placeholder="Votre nom" maxlength="20">
+                            <div class="ui disabled input">
+                                <input type="text" class="modal-name" name="nom" placeholder="Votre nom" maxlength="20">
+                            </div>
+                            
                         </div>
                         <div class="field">
                             {{!-- <input type="text" > --}}
@@ -146,7 +149,7 @@
 <script>
 
     //DATE DATA 
-    const dates_data = ["12 Fevrier", "26 Fevrier", "12 Mars", "9 Avril", "23 Avril","7 Mai", "4 juin", "18 juin"]
+    const dates_data = ["12 Fevrier", "26 Fevrier", "12 Mars", "26 Mars", "9 Avril", "23 Avril","7 Mai", "21 Mai"]
 
     //const fictif = ["12 Fevrier", "26 Fevrier", "12 Mars", "18 juin"]
 
@@ -177,6 +180,15 @@
         })
     })
 
+    //Populate MODAL dropdown values 
+    //let modal_items = []
+    //dates_data.forEach(date=>{
+        //modal_items.push({
+            //name: date,
+            //value: date
+        //})
+    //})
+
     //SEMANTIC DROPDOWN INIT
     $('#dropdown')
     .dropdown({
@@ -194,7 +206,7 @@
     //IF LIST OF DATES / DROPDOWN IS EMPTY 
     $('.ui .dropdown').on('click', ()=>{
         if(items.length == 0)
-            alert("Toutes les dates sont prise!")
+            alert("Toutes les dates ont été prise!")
     })
     
 
