@@ -88,6 +88,9 @@ $(document).ready(function(){
     //Left navigation
     $('#left_nav').on('click', ()=>
     {
+        //Remove the RAS
+        $('.circle').hide()
+        // $('table').after('<div class="ui icon message"><i aria-hidden="true" class="circle notched loading icon"></i><div class="content"><div class="header">R.A.S!</div>La liste est encore vide par ici.</div></div>')
 
         //Decrement ref
         if(pag_ref != 1)
@@ -115,7 +118,6 @@ $(document).ready(function(){
 
 
     $('#right_nav').on('click', ()=>{
-
         //Increment ref
         if(pag_ref <= Math.round(data.length/5))
             pag_ref +=1
@@ -132,6 +134,11 @@ $(document).ready(function(){
             if((typeof data[i] != "undefined")){
                 dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
             }
+            else{
+                $('table').after('<div class="ui icon message circle"><i aria-hidden="true" class="circle notched loading icon"></i><div class="content"><div class="header">R.A.S!</div>La liste est encore vide par ici.</div></div>')
+                return false
+            }
+     
         }
         
     })
