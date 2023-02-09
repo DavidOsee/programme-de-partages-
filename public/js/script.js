@@ -89,7 +89,7 @@ $(document).ready(function(){
     $('#left_nav').on('click', ()=>
     {
         //Remove the RAS
-        $('.circle').hide()
+        $('.circle').remove()
         // $('table').after('<div class="ui icon message"><i aria-hidden="true" class="circle notched loading icon"></i><div class="content"><div class="header">R.A.S!</div>La liste est encore vide par ici.</div></div>')
 
         //Decrement ref
@@ -116,7 +116,7 @@ $(document).ready(function(){
 
     })
 
-
+    console.log(data.length)
     $('#right_nav').on('click', ()=>{
         //Increment ref
         if(pag_ref <= Math.round(data.length/5))
@@ -125,19 +125,25 @@ $(document).ready(function(){
         else if(pag_ref >= Math.round(data.length/5))
             alert("C'est tout!")
 
+            console.log(data.length)
         //Empty tbody
         $('table tbody').html("")
 
         const init = 5*(pag_ref-1)
+
+        //
+        if(data.length < 6){
+            $('.circle').remove()
+            $('table').after('<div class="ui icon message circle"><i aria-hidden="true" class="circle notched loading icon"></i><div class="content"><div class="header">R.A.S!</div>La liste est encore vide par ici.</div></div>')
+            //return false
+        }
         
         for(i=init; i<pag_ref*5; i++){
             if((typeof data[i] != "undefined")){
+                $('.circle').remove()
                 dataContent(data[i]._id, data[i].orateur_id, data[i].name, data[i].theme, data[i].date)
             }
-            else{
-                $('table').after('<div class="ui icon message circle"><i aria-hidden="true" class="circle notched loading icon"></i><div class="content"><div class="header">R.A.S!</div>La liste est encore vide par ici.</div></div>')
-                return false
-            }
+            
      
         }
         
