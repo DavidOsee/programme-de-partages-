@@ -44,8 +44,8 @@ $(document).ready(function(){
         $('table tbody').append(`
             <tr>
                 <td class="_id">${id}</td>
-                <td class="text-truncate" style="max-width: 100px;">${name}</td>
-                <td class="text-truncate" style="max-width: 155px;">${theme}</td>
+                <td class="text-truncate" style="max-width: 55px;">${name}</td>
+                <td class="text-truncate" style="max-width: 120px;">${theme}</td>
                 <td class="text-truncate" style="max-width: 100px;">${date}</td>
                 <td>
                     <button class="ui primary button edit" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-id="${_id}" data-bs-name="${name}" data-bs-theme="${theme}" data-bs-date="${date}" >Editer</button>
@@ -233,14 +233,16 @@ $(document).ready(function(){
         $inputs.each(function() {
             modal_data[this.name] = $(this).val();
         });
+        console.log(modal_data)
 
         //Validate before sending to the server 
-        if(modal_data.nom =="" || modal_data.date=="")
-            return false
+        if(modal_data.date =="")
+            modal_data.date = modal_data.CurrentDate
         
         if(modal_data.nom.length > 20 || modal_data.theme.length > 80 || modal_data.date.length > 15)
             return false
 
+        //console.log(modal_data)
         //Ajax 
         $.ajax({
             url: '/edit',
@@ -271,9 +273,9 @@ $(document).ready(function(){
                 //On success
                 swal({
                     title: "Félicitations!",
-                    text: "Vous etes notre prochain orateur!",
+                    text: "Vos informations sont à jour!",
                     icon: "success",
-                    button: "Gloire à Dieu!"
+                    button: "Merci Seigneur!"
                 }).then(()=> { window.location = "/"});
 
                 //RESET FORM

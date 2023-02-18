@@ -249,17 +249,19 @@ const Editer = asyncHandler(async(req, res)=>{
     const name  = nom.trim()
 
     //Check name & date
-    const existing_name = db_data.some(d=> name.toLowerCase() === d.name.toLowerCase())
-    const existing_date = db_data.some(d=> date == d.date)
+    //const existing_name = db_data.some(d=> name.toLowerCase() === d.name.toLowerCase())
 
-    console.log(existing_name)
-    console.log(existing_date)
+    //Confirm whether date is not updated
+    const One_data = await Orateur.find({name : nom})
+    let existing_date = false
+
+    if(One_data[0].date != date)
+        existing_date = db_data.some(d=> date == d.date)
 
     // if(existing_name){
     //     res.send('-1') //error - existing name
     //     return false
     // }
-       
 
     if(existing_date){
         res.send('-2') //error - existing date [Just for double security]
@@ -277,6 +279,18 @@ const Editer = asyncHandler(async(req, res)=>{
     res.send('1')
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //CREATE EXCEL FILE 
@@ -338,6 +352,10 @@ const DownloadFile = asyncHandler(async(req, res)=>{
         res.download(file)
     }, 1000);
 })
+
+
+
+
 
 
 //EXPORT TO MAIN-ROUTES
