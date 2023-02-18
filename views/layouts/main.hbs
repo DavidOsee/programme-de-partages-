@@ -59,19 +59,21 @@
 			const modalId = exampleModal.querySelector('#modal_id')
 			const modalName = exampleModal.querySelector('.modal-name')
 			const modalTheme = exampleModal.querySelector('.modal-theme')
+			const modalDate = exampleModal.querySelector('.modal-current-date')
 
 			//Load values
 			modalName.value = nom
 			modalTheme.value = theme
 			modalId.value = id
+			modalDate.value = tableDate
 
 		})
 
 
 		
 
-		//FORM VALIDATION
-		$('.ui.form')
+		//AJOUTER FORM VALIDATION
+		$('#ajouter')
 		.form({
 			fields: {
 			nom: {
@@ -103,6 +105,46 @@
 					type   : 'empty',
 					prompt : 'Vous devez choisir une date'
 				},
+				{
+					type   : 'maxLength[15]',
+					prompt : 'Trop long comme date!'
+				}
+				]
+			},
+			}
+		})
+		;
+
+
+		//METTRE A JOUR FORM VALIDATION 
+		$('#editer')
+		.form({
+			fields: {
+			nom: {
+				identifier: 'nom',
+				rules: [
+				{
+					type   : 'empty',
+					prompt : 'Entrez votre nom s\'il vous plait'
+				},
+				{
+					type   : 'maxLength[20]',
+					prompt : 'Trop long comme nom!'
+				}
+				]
+			},
+			theme: {
+				identifier: 'theme',
+				rules: [
+				{
+					type   : 'maxLength[80]',
+					prompt : 'Votre theme est beaucoup trop long!'
+				}
+				]
+			},
+			date: {
+				identifier: 'date',
+				rules: [
 				{
 					type   : 'maxLength[15]',
 					prompt : 'Trop long comme date!'
